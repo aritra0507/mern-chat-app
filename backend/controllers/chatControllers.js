@@ -101,8 +101,8 @@ const renameGroup=asyncHandler(async(req,res)=>{
         {
             new:true,
         }
-    ).populate("users","password")
-    .populate("groupAdmin","password");
+    ).populate("users","-password")
+    .populate("groupAdmin","-password");
 
     if(!updatedChat){
         res.status(404);
