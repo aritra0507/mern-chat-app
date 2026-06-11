@@ -18,7 +18,8 @@ import {
   useToast,
   position,
   Spinner,
-  background
+  background,
+  Badge
 } from "@chakra-ui/react";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import React, { useState } from "react";
@@ -29,6 +30,7 @@ import { useDisclosure } from "@chakra-ui/react";
 import axios from 'axios';
 import ChatLoading from "../ChatLoading";
 import UserListItem from "../UserAvatar/UserListItem";
+import {getSender} from "../../config/ChatLogics";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState("");
@@ -36,7 +38,7 @@ const SideDrawer = () => {
   const [loading, setLoading] = useState(false);
   const [loadingChat, setLoadingChat] = useState();
   const [hasSearched,setHasSearched]=useState(false);
-  const { user,setSelectedChat,chats,setChats } = ChatState();
+  const { user,setSelectedChat,chats,setChats,notification,setNotification} = ChatState();
   const navigate=useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -129,7 +131,8 @@ const SideDrawer = () => {
         borderWidth={"5px"}
       >
         <Tooltip label="Search users to chat" hasArrow placement="bottom-end" bg="green">
-          <Button variant="ghost" onClick={onOpen} _hover={{bg:"rgba(225, 129, 37, 0.1)"}}>
+          <Button variant="ghost" onClick={onOpen} _hover={{bg:"rgba(225, 129, 37, 0.1)",transform: "translateY(-2px)",
+                boxShadow: "lg",}}>
             <i class="fa-solid fa-magnifying-glass"></i>
             <Text display={{ base: "none", md: "flex" }} px={"4"}>
               Search User
@@ -142,9 +145,29 @@ const SideDrawer = () => {
         <div>
           <Menu>
             <Tooltip label="Notifications" hasArrow placement="bottom-end" bg="green">
-              <MenuButton p={"1"} _hover={{bg:"rgba(225, 129, 37, 0.1)"}}>
+              <MenuButton p={"1"} _hover={{bg:"rgba(225, 129, 37, 0.1)",transform: "translateY(-2px)",
+                boxShadow: "lg",}}>
+                <Box position={"relative"}>
                 <BellIcon fontSize={"2xl"} margin={"1"} />
+                {notification.length>0 && (<Badge colorScheme="red"
+                  borderRadius="full"
+                  position="absolute"
+                  top="0"
+                  right="0" fontSize="0.7em" px={2}>{notification.length}
+                </Badge>)}
+                </Box>
               </MenuButton>
+              <MenuList pl={2}>
+                {!notification.length && "No New Messages"}
+                {notification.map((notif)=>(
+                  <MenuItem key={notif._id} onClick={()=>{
+                    setSelectedChat(notif.chat);
+                    setNotification(notification.filter((n)=>n!==notif));
+                  }}>
+                    {notif.chat.isGroupChat?`New Message in ${notif.chat.chatName}`:`New Message from ${getSender(user,notif.chat.users)}`}
+                  </MenuItem>
+                ))}
+              </MenuList>
             </Tooltip>
           </Menu>
           <Menu>
@@ -188,7 +211,18 @@ const SideDrawer = () => {
                   }
                 }}
               />
-              <Button _hover={{background:"rgba(225, 129, 37, 0.1)"}} onClick={handleSearch}>Go</Button>
+              <Button bg="#ED8B2D"
+                color="white"
+                borderRadius="lg"
+                boxShadow="sm"
+                transition="all 0.2s" _hover={{
+                  bg: "#D97E21",
+                  transform: "translateY(-2px)",
+                  boxShadow: "lg",
+                }}
+                _active={{
+                  transform: "translateY(0)",}} 
+                  onClick={handleSearch}>Go</Button>
             </Box>
             {loading?(
               <ChatLoading/>

@@ -234,6 +234,8 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
                 ml={1}
                 isLoading={renameLoading}
                 onClick={handleRename}
+                _hover={{transform: "translateY(-2px)",
+                boxShadow: "lg",}}
               >
                 Update
               </Button>
@@ -261,7 +263,8 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button onClick={() => handleRemove(user)} colorScheme="red">
+            <Button onClick={() => handleRemove(user)} colorScheme="red" _hover={{transform: "translateY(-2px)",
+                boxShadow: "lg",}}>
               Leave Group
             </Button>
           </ModalFooter>

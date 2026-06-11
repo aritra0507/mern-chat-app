@@ -170,9 +170,21 @@ const GroupChatModal = ({children}) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button bg={"#ED8B2D"} color={"white"} _hover={{bg:"rgba(225, 129, 37, 0.1)",color:"black"}} onClick={handleSubmit}>
+            <Button bg="#ED8B2D"
+                color="white"
+                borderRadius="lg"
+                boxShadow="sm"
+                transition="all 0.2s" 
+                _hover={{
+                  bg: "#D97E21",
+                  transform: "translateY(-2px)",
+                  boxShadow: "lg",
+                }}
+                _active={{
+                  transform: "translateY(0)",}} 
+                onClick={handleSubmit}>
               Create Chat
-            </Button>
+            </Button> 
             
           </ModalFooter>
         </ModalContent>

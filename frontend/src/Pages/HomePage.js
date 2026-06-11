@@ -21,22 +21,24 @@ const HomePage = () => {
   return (
     <Container maxW="xl" centerContent>
       <Box
-        d="flex"
+        display="flex"
         justifyContent="center"
         p={3}
         bg={"whiteAlpha.100"}
         w="100%"
         m="40px 0 15px 0"
-        borderRadius="lg"
-        borderWidth="1px"
       >
-        <Text fontSize={"4xl"} textAlign={"center"} fontFamily={"Work sans"} color={'white'}fontWeight={800}>Chat-ter</Text>
+        <Text fontSize={"4xl"} textAlign={"center"} fontFamily={"Work sans"} color={'black'}fontWeight={900}>Chat-ter</Text>
       </Box> 
-      <Box bg="blackAlpha.500" w="100%" p={4} borderRadius="lg" borderWidth="1px">
+      <Box  border="1px solid"
+        borderColor="#ED8B2D"
+        borderRadius="xl"
+        boxShadow="0 8px 25px rgba(237,139,45,0.12)"
+        bg="white" w="100%" p={4} >
         <Tabs isFitted variant="soft-rounded">
           <TabList mb="1em">
-            <Tab _selected={{ color: 'white', bg: 'purple.500', borderRadius: 'full' }} color={'white'}>Log In</Tab>
-            <Tab _selected={{ color: 'white', bg: 'purple.500', borderRadius: 'full' }} color={'white'}>Sign Up</Tab>
+            <Tab _selected={{ color: 'white', bg: '#ED8B2D', borderRadius: 'full' }} color={'black'}>Log In</Tab>
+            <Tab _selected={{ color: 'white', bg: '#ED8B2D', borderRadius: 'full' }} color={'black'}>Sign Up</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>

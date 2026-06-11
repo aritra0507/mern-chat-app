@@ -1,11 +1,12 @@
 import React,{useEffect, useState} from 'react'
-import {useToast,Box,Button, Stack,Text} from '@chakra-ui/react'
+import {useToast,Box,Button, Stack,Text,Avatar, Spinner} from '@chakra-ui/react'
 import {ChatState} from "../Context/ChatProvider"
 import axios from 'axios'
 import { AddIcon } from '@chakra-ui/icons'
 import ChatLoading from './ChatLoading'
-import { getSender } from '../config/ChatLogics'
+import { getSender, getSenderFull } from '../config/ChatLogics'
 import GroupChatModal from './miscellaneous/GroupChatModal'
+import { newMessageReceived } from './SingleChat'
 
 const MyChats = ({fetchAgain}) => {
   const [loggedUser,setLoggedUser]=useState();
@@ -70,8 +71,11 @@ const MyChats = ({fetchAgain}) => {
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}
             rightIcon={<AddIcon />}
             _hover={{
-              bg:"rgba(225, 129, 37, 0.1)"
-            }}
+                  transform: "translateY(-2px)",
+                  boxShadow: "lg",
+                }}
+            _active={{
+                  transform: "translateY(0)",}}
           >
             New Group
           </Button>
@@ -90,17 +94,22 @@ const MyChats = ({fetchAgain}) => {
         {chats?(
           <Stack overflowY={"scroll"}>
             {chats.map((chat)=>(
-              <Box onClick={()=>setSelectedChat(chat)}
+              <Box display={"flex"} onClick={()=>{setSelectedChat(chat);}
+              }
               cursor={"pointer"}
               bg={selectedChat===chat?"#ED8B2D":"#E8E8E8"}
               color={selectedChat === chat ? "white" : "black"}
-              _hover={{bg:selectedChat===chat?"#ED8B2D":"rgba(225, 129, 37, 0.1)"}}
+              _hover={{bg:selectedChat===chat?"#ED8B2D":"rgba(225, 129, 37, 0.1)",
+                transform: "translateY(-2px)",
+                boxShadow: "lg",
+              }}
               px={3}
               py={2}
               borderRadius="lg"
               key={chat._id}
             >
-              <Text>
+              {!chat.isGroupChat && <Avatar size="sm" name={getSender(loggedUser,chat.users)} src={(getSenderFull(loggedUser,chat.users)).pic} mr={3}/>}
+              <Text p={1} fontWeight={"medium"}>
                 {!chat.isGroupChat?(getSender(loggedUser,chat.users)):(chat.chatName)}
               </Text>
             </Box>

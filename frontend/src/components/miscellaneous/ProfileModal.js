@@ -1,5 +1,5 @@
 import React from 'react'
-import { IconButton, useDisclosure } from '@chakra-ui/react';
+import { IconButton, useDisclosure,Avatar } from '@chakra-ui/react';
 import { ViewIcon } from '@chakra-ui/icons';
 import {
   Modal,
@@ -36,11 +36,11 @@ const ProfileModal = ({user,children}) => {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody display={"flex"} flexDir={"column"} alignItems={"center"} justifyContent={"space-between"}>
-          <Image
-            borderRadius={"full"}
-            boxSize={"150px"}
+          <Avatar
+            size={"2xl"}
+            boxSize={"200px"}
             src={user.pic}
-            alt={user.name}
+            name={user.name}
           />
           <Text fontSize={{base:"28px", md:"30px"}} fontFamily={"work sans"}>Email: {user.email}</Text>
           </ModalBody>
